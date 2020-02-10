@@ -12,3 +12,13 @@ body{
   width: 30vw;
   height: 30vw;
 }
+
+h1.city {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+span.item {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: large;
+  display: block;
+}

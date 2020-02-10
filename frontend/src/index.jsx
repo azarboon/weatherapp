@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// const apiURL = process.env.ENDPOINT;
+const apiURL = process.env.ENDPOINT;
 
-const apiURL = '';
+//const apiURL = '';
 
 const getWeatherFromApi = async () => {
   try {
@@ -22,20 +22,34 @@ class Weather extends React.Component {
 
     this.state = {
       icon: "",
+      summary:"",
+      city: "Helsinki, Finland"
     };
   }
 
   async componentWillMount() {
-    const weather = await getWeatherFromApi();
-    this.setState({icon: weather.icon.slice(0, -1)});
+    const data = await getWeatherFromApi();
+    const icon = data.weather[0].icon;
+    const city = this.state.city;
+    this.setState({
+      icon: icon.slice(0, -1),
+      summary: data.main
+    });
   }
 
   render() {
-    const { icon } = this.state;
+    const { icon, summary, city } = this.state;
 
     return (
-      <div className="icon">
-        { icon && <img src={`/img/${icon}.svg`} /> }
+      <div className="weather">
+        <div className="icon">
+          {icon && <img src={`/img/${icon}.svg`} />}
+        </div>
+        <h1 className="city">{city}</h1>
+        <div className="summary">
+          <span className="item"><strong>{summary.temp}</strong> degrees</span>
+          <span className="item"><strong>{summary.humidity}%</strong> humidity</span>
+        </div>
       </div>
     );
   }
